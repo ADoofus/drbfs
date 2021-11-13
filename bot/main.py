@@ -7,12 +7,12 @@ import pytz
 
 client = discord.Client()
 term_size = os.get_terminal_size()
-me = os.environ['user1']
-me2 = os.environ['user2']
-me3 = os.environ['user3']
-d = os.environ['user4']
-d2 = os.environ['user5']
-token = os.environ['TOKEN']
+me = os.getenv('user1')
+me2 = os.getenv('user2')
+me3 = os.getenv('user3')
+d = os.getenv('user4')
+d2 = os.getenv('user5')
+token = os.getenv('TOKEN')
 tz = pytz.timezone('America/Los_Angeles')
 
 @client.event
