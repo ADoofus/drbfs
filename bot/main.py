@@ -1,16 +1,45 @@
+import discord
 import os
-from discord.ext import commands
+from colorama import Fore, Back, Style
+from datetime import datetime
+from tzlocal import get_localzone_name
+import pytz
 
-bot = commands.Bot(command_prefix="!")
-TOKEN = os.getenv("DISCORD_TOKEN")
+client = discord.Client()
+term_size = os.get_terminal_size()
+me = os.environ['user1']
+me2 = os.environ['user2']
+me3 = os.environ['user3']
+d = os.environ['user4']
+d2 = os.environ['user5']
+token = os.environ['TOKEN']
+tz = pytz.timezone('America/Los_Angeles')
 
-@bot.event
+@client.event
 async def on_ready():
-    print(f"Logged in as {bot.user.name}({bot.user.id})")
+  print("    ___                                           ____    ")
+  print("   /   |  ____ ___  ____  ____ ___  _______     /  __  \  ")
+  print("  / /| | / __ `__ \/ __ \/ __ `/ / / / ___/    |  [  ]  | ")
+  print(" / ___ |/ / / / / / /_/ / /_/ / /_/ (__  )     |  ____  | ")
+  print("/_/  |_/_/ /_/ /_/\____/\__, /\__,_/____/      |  |  |  | ")
+  print("                       /____/                             "
+  print(Fore.LIGHTBLACK_EX + '=' * term_size.columns)
+  print(Fore.RED + "Now reading messages:",)
+  print(Fore.LIGHTBLACK_EX + '=' * term_size.columns)
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send("pong")
-
-if __name__ == "__main__":
-    bot.run(TOKEN)
+@client.event
+async def on_message(message):
+  timeZone = pytz.timezone(str("America/Los_Angeles")) 
+  datetime_now = datetime.now(timeZone)
+  print(Fore.GREEN + "Server: " + str(message.guild.name) + Fore.LIGHTBLACK_EX + "   |  " + Fore.BLUE + "Channel: #" + str(message.channel))
+  current_time = datetime_now.strftime("%A, %m-%d-%Y [%H:%M %p]")
+  print(Fore.LIGHTBLACK_EX + current_time)
+  if message.author.id == me or me2 or me3:
+    print(Fore.RED + str(message.author.name) + ": " + Fore.WHITE + str(message.content))
+  elif message.author.id == d:
+    print(Fore.LIGHTBLUE_EX + str(message.author.name) + ": " + Fore.WHITE + str(message.content))
+  elif message.author.id == d2:
+      print(Fore.LIGHTMAGENTA_EX + str(message.author.name) + ": " + Fore.WHITE + str(message.content))
+  print(Fore.LIGHTBLACK_EX + '=' * term_size.columns)
+    
+client.run(token)
